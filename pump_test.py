@@ -1,21 +1,17 @@
 #!/usr/bin/env python3
 """
-One-at-a-time pump driver for a Raspberry Pi.
+Sequential-pump driver for a Raspberry Pi.
 
-Key points
-----------
-• Each pump is driven through a relay/MOSFET that has its *own* power supply;
-  the Pi only provides a 3 V logic signal.
-• The script uses BCM numbering (17, 27, 22, …).
-• Safety: the helper `stop_all_pumps()` is called **before** and **after** every
-  pump cycle so a stray HIGH on any pin is immediately cleared.
+• Each pump is switched by a GPIO pin that drives a relay or MOSFET.
+• The pumps have their **own** power supply; the Pi only sends the control signal.
+• Uses BCM pin numbering (the numbers printed on most wiring diagrams).
 """
 
 import time
 import RPi.GPIO as GPIO
 
 # ---------------------------------------------------------------------------
-# 1) Configure your pumps in one place
+# 1) Declare your pumps in one easy-to-read dictionary
 # ---------------------------------------------------------------------------
 PUMPS = {
     "pump_1": {"name": "Pump 1", "pin": 17, "value": "gin"},
@@ -26,33 +22,44 @@ PUMPS = {
     "pump_6": {"name": "Pump 6", "pin": 25, "value": None},
 }
 
-RUNTIME_SECONDS   = 30          # Time each pump stays ON
-ACTIVE_STATE      = GPIO.HIGH   # Flip to GPIO.LOW if your relay is active-low
-INTER_PUMP_PAUSE  = 0.3         # Pause (s) after cutting power before next ON
+RUNTIME_SECONDS = 30           # How long to run each pump
+ACTIVE_STATE     = GPIO.HIGH   # Change to GPIO.LOW if your relay is active-low
 
 # ---------------------------------------------------------------------------
 # 2) Basic GPIO setup
 # ---------------------------------------------------------------------------
-GPIO.setmode(GPIO.BCM)
+GPIO.setmode(GPIO.BCM)         # Use BCM numbering (17, 27, …)
 GPIO.setwarnings(False)
+
 for pump in PUMPS.values():
     GPIO.setup(pump["pin"], GPIO.OUT, initial=GPIO.LOW)
 
-def stop_all_pumps() -> None:
-    """Force every pump pin LOW."""
-    for pump in PUMPS.values():
-        GPIO.output(pump["pin"], GPIO.LOW)
-
-print(
-    "Running one-pump-at-a-time test – each pump will run for "
-    f"{RUNTIME_SECONDS} s.\nPress Ctrl-C to abort.\n"
-)
+print("Starting pump test – each pump will run for "
+      f"{RUNTIME_SECONDS} s, one at a time.\n"
+      "Press Ctrl-C to abort.\n")
 
 # ---------------------------------------------------------------------------
-# 3) Main loop
+# 3) Main loop: run each pump once
 # ---------------------------------------------------------------------------
 try:
     for key, pump in PUMPS.items():
-        name, pin = pump["name"], pump["pin"]
+        name = pump["name"]
+        pin  = pump["pin"]
 
-        # --- Safety first: be sure
+        print(f"[{name}] ON  (GPIO {pin})")
+        GPIO.output(pin, ACTIVE_STATE)     # Turn pump on
+        time.sleep(RUNTIME_SECONDS)
+        GPIO.output(pin, not ACTIVE_STATE) # Turn pump off
+        print(f"[{name}] OFF\n")
+
+    print("All pumps have completed their 30-second run.")
+
+except KeyboardInterrupt:
+    print("\nUser interrupted – shutting everything down.")
+
+finally:
+    # -----------------------------------------------------------------------
+    # 4) Always clean up the GPIO pins on exit
+    # -----------------------------------------------------------------------
+    GPIO.cleanup()
+    print("GPIO cleanup done. Goodbye!")
