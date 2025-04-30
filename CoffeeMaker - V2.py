@@ -51,6 +51,17 @@ def select_options():
         display("Invalid input. Please enter a number.")
 
 
+def pour_drink(drink):
+    display(f"Pouring {drink['name']}...")
+    for ingredient, amount in drink['ingredients'].items():
+        for pump in pump_configuration.keys():
+            if ingredient == pump_configuration[pump]['value']:
+                wait_time = amount * FLOW_RATE
+                pour(pump_configuration[pump]['pin'], wait_time)
+                display(f"Poured {amount}ml of {ingredient}")
+    display(f"{drink['name']} is ready!")
+
+
 start_up()
 while True:
     select_options()
