@@ -62,11 +62,17 @@ def pour_drink(drink):
     display(f"{drink['name']} is ready!")
 
 
+def clean_up():
+    GPIO.cleanup()
+    display("Cleaned up GPIO pins.")
+
 start_up()
 while True:
     select_options()
+    print("-----------------------------------")
 
 
+clean_up()
 
 
 
