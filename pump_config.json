@@ -12,12 +12,12 @@
 	"pump_3": {
 		"name": "Pump 3",
 		"pin": 22,
-		"value": "soda"
+		"value": "rum"
 	},
 	"pump_4": {
 		"name": "Pump 4",
 		"pin": 23,
-		"value": "kool-aid"
+		"value": "coke"
 	},
 	"pump_5": {
 		"name": "Pump 5",
