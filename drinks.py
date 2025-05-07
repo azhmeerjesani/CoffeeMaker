@@ -4,7 +4,11 @@ drink_list = [
 		"name": "Rum & Coke",
 		"ingredients": {
 			"rum": 50,
-			"coke": 150
+			"coke": 150,
+			"gin": 25;
+			"tonic": 25;
+			"quester": 25;
+			"seagull": 25
 		}
 	}, {
 		"name": "Gin & Tonic",
