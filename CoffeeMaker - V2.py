@@ -10,7 +10,7 @@ import traceback
 import RPi.GPIO as GPIO
 
 from drinks import drink_list
-from keys import gmail_key, main_email, recieve_email
+from keys import gmail_key, main_email, receive_email
 
 # -----------------------------------------------------------------------------
 # ─────────────────────────── CONFIGURATION SECTION ───────────────────────────
@@ -25,7 +25,7 @@ if not EMAIL_PASSWORD:
 IMAP_SERVER = "imap.gmail.com"
 SMTP_SERVER = "smtp.gmail.com"
 SUBJECT_FILTER = "Coffee Decision"
-SMS_GATEWAY_ADDRESS = recieve_email()  # recipient and reply-from for SMS
+SMS_GATEWAY_ADDRESS = receive_email()  # recipient and reply-from for SMS
 POLL_INTERVAL = 15  # seconds between mailbox checks
 
 FLOW_RATE = 60.0 / 100.0   # seconds per mL (adjust as needed)
