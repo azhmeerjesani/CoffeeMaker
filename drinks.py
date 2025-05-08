@@ -1,54 +1,54 @@
 # drinks.py
 drink_list = [
 	{
-		"name": "Rum & Coke",
+		"name": "D1",
 		"ingredients": {
-			"rum": 50,
-			"coke": 150,
-			"gin": 25,
-			"tonic": 25,
-			"quester": 25,
-			"seagull": 25
+			"p1": 50,
+			"p2": 150,
+			"p3": 25,
+			"p4": 25,
+			"p5": 25,
+			"p6": 25
 		}
 	}, {
-		"name": "Gin & Tonic",
+		"name": "D2",
 		"ingredients": {
-			"gin": 50,
-			"tonic": 150
+			"p1": 50,
+			"p2": 150
 		}
 	}, {
-		"name": "Long Island",
+		"name": "D3",
 		"ingredients": {
-			"gin": 15,
-			"rum": 15,
-			"vodka": 15,
-			"tequila": 15,
-			"coke": 100,
-			"oj": 30
+			"p3": 15,
+			"p4": 15,
+			"p5": 15,
+			"p6": 15,
+			"p1": 100,
+			"p2": 30
 		}
 	}, {
-		"name": "Screwdriver",
+		"name": "D4",
 		"ingredients": {
-			"vodka": 50,
-			"oj": 150
+			"p3": 50,
+			"p4": 150
 		}
 	}, {
-		"name": "Margarita",
+		"name": "D5",
 		"ingredients": {
-			"tequila": 50,
-			"mmix": 150
+			"p5": 50,
+			"p6": 150
 		}
 	}, {
-		"name": "Gin & Juice",
+		"name": "D6",
 		"ingredients": {
-			"gin": 50,
-			"oj": 150
+			"p1": 50,
+			"p2": 150
 		}
 	}, {
-		"name": "Tequila Sunrise",
+		"name": "D7",
 		"ingredients": {
-			"tequila": 50,
-			"oj": 150
+			"p3": 50,
+			"p4": 150
 		}
 	}
 ]
